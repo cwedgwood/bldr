@@ -4,11 +4,13 @@
 default: container
 
 container:
-	docker build -t bldr . | cat
+	docker build -t bldr .
 	docker images bldr
-	docker run --rm bldr sh -c 'echo ; gcc -v ; echo ; musl-gcc -v ; echo ; klcc -v'
+
+runtest: container
+	docker run --rm bldr sh -c 'echo ; gcc -v ; echo ; musl-gcc -v ; echo ; klcc -v; go version'
 
 clean:
 	rm -f *~
 
-.PHONY: default container
+.PHONY: default container runtest
